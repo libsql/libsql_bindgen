@@ -1,9 +1,12 @@
 #![no_std]
 
-use core::ffi::{c_char, CStr};
+use core::ffi::{c_char, c_void, CStr};
 
 static SQLITE_TEXT: u8 = 3;
+static SQLITE_BLOB: u8 = 4;
+static SQLITE_NULL: u8 = 5;
 
+#[allow(dead_code)]
 fn to_str<'a>(raw_ptr: *const c_char) -> &'a str {
     unsafe {
         if *raw_ptr != SQLITE_TEXT as c_char {
@@ -14,6 +17,21 @@ fn to_str<'a>(raw_ptr: *const c_char) -> &'a str {
                 Err(_) => "!!!",
             }
         }
+    }
+}
+
+fn to_slice<'a>(raw_ptr: *const c_void) -> &'a mut [u8] {
+    if unsafe { *(raw_ptr as *const c_char) != SQLITE_BLOB as c_char } {
+        &mut []
+    } else {
+        let size = unsafe {
+            u32::from_be_bytes(
+                core::slice::from_raw_parts(raw_ptr.offset(1) as *const u8, 4)
+                    .try_into()
+                    .unwrap_or([0_u8, 0_u8, 0_u8, 0_u8]),
+            )
+        };
+        unsafe { core::slice::from_raw_parts_mut(raw_ptr.offset(5) as *mut u8, size as usize) }
     }
 }
 
@@ -54,6 +72,19 @@ pub fn fib(n: i64) -> i64 {
         0 | 1 => n,
         _ => fib(n - 1) + fib(n - 2),
     }
+}
+
+#[no_mangle]
+pub fn reverse_blob(arg: *const c_void) -> *const c_void {
+    to_slice(arg).reverse();
+    arg
+}
+
+#[no_mangle]
+pub fn get_null() -> *const c_char {
+    let result_ptr = core::arch::wasm32::memory_grow(0, 1) * 65536;
+    unsafe { *(result_ptr as *mut u8) = SQLITE_NULL };
+    result_ptr as *const c_char
 }
 
 #[panic_handler]

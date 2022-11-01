@@ -116,7 +116,7 @@ pub fn libsql_bindgen(_attrs: TokenStream, item: TokenStream) -> TokenStream {
 
     let ts = TokenStream::from(quote! {
         extern crate libsql_wasm_abi;
-        use crate::libsql_wasm_abi::*;
+        use libsql_wasm_abi::*;
 
         #native_sig
         #native_block

@@ -1,0 +1,13 @@
+[package]
+edition = "2021"
+name = "examples"
+publish = false
+version = "0.0.0"
+
+[dependencies]
+libsql_bindgen = { path = "../bindgen" }
+libsql_wasm_abi = { path = "../abi" }
+
+[[example]]
+name = "concat"
+path = "src/concat.rs"

@@ -1,0 +1,5 @@
+[package]
+edition = "2021"
+name = "libsql_wasm_abi"
+version = "0.0.0"
+

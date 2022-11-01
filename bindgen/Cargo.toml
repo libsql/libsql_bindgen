@@ -1,11 +1,12 @@
 [package]
 name = "libsql_bindgen"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["webassembly", "libsql", "sqlite", "wasm", "udf"]
 description = "Rust library for writing WebAssembly-powered user-defined functions for libSQL"
 repository = "https://github.com/psarna/libsql_bindgen"
+readme = "../README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

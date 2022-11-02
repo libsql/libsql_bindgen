@@ -1,8 +1,0 @@
-[package]
-edition = "2021"
-name = "libsql_wasm_abi"
-version = "0.0.0"
-license = "MIT OR Apache-2.0"
-keywords = ["webassembly", "libsql", "sqlite", "wasm", "udf"]
-description = "Rust ABI for writing WebAssembly-powered user-defined functions for libSQL"
-repository = "https://github.com/psarna/libsql_bindgen"

@@ -8,18 +8,5 @@ description = "Rust library for writing WebAssembly-powered user-defined functio
 repository = "https://github.com/psarna/libsql_bindgen"
 readme = "../README.md"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-proc-macro2 = "1.0"
-quote = "1.0"
-syn = { version = "1.0", features = ["full"] }
-libsql_wasm_abi = { version = "0", path = "../abi"}
-
-[lib]
-proc-macro = true
-
-[profile.release]
-opt-level = 's'
-lto = true
-
+libsql_bindgen_macros = { version = "0", path = "../bindgen_macros"}

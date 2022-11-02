@@ -10,5 +10,6 @@ pub fn encrypt(data: String, key: String) -> String {
 #[libsql_bindgen::libsql_bindgen]
 pub fn decrypt(data: String, key: String) -> String {
     let mc = new_magic_crypt!(key, 256);
-    mc.decrypt_base64_to_string(data).unwrap()
+    mc.decrypt_base64_to_string(data)
+        .unwrap_or("[ACCESS DENIED]".to_owned())
 }

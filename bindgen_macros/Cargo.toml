@@ -1,0 +1,23 @@
+[package]
+edition = "2021"
+name = "libsql_bindgen_macros"
+version = "0.2.0"
+license = "MIT OR Apache-2.0"
+keywords = ["webassembly", "libsql", "sqlite", "wasm", "udf"]
+description = "Rust macros for writing WebAssembly-powered user-defined functions for libSQL"
+repository = "https://github.com/psarna/libsql_bindgen"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { version = "1.0", features = ["full"] }
+
+[lib]
+proc-macro = true
+
+[profile.release]
+opt-level = 's'
+lto = true
+

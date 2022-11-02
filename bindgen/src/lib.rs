@@ -1,6 +1,6 @@
 use core::ffi::{c_char, c_void, CStr};
 
-pub use libsql_bindgen::libsql_bindgen;
+pub use libsql_bindgen_macros::libsql_bindgen;
 
 static SQLITE_TEXT: u8 = 3;
 static SQLITE_BLOB: u8 = 4;

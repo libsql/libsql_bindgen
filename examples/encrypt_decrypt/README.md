@@ -25,7 +25,7 @@ make -j8 sqlite3
 
 # Compile user-defined functions to WebAssembly
 
-## libsql_bindgen macro
+## libsql\_bindgen macro
 libSQL supports running WebAssembly functions with specific type translation: 
  - INTEGER and DOUBLE are passed as is
  - TEXT is passed as a pointer to the following structure:
@@ -35,21 +35,19 @@ libSQL supports running WebAssembly functions with specific type translation:
  - NULL is passed as a pointer to the following structure:
     `[1 byte of type information]`
 
-In order to automatically translate between native Rust types and libSQL types, one can use the [libsql_bindgen](https://crates.io/crates/libsql_bindgen) crate and its [#[libsql_bindgen]](https://docs.rs/libsql_bindgen/latest/libsql_bindgen/attr.libsql_bindgen.html) macro. Here's the example source code:
-```rust
-use libsql_bindgen::*;
-use magic_crypt::{new_magic_crypt, MagicCryptTrait};
+In order to automatically translate between native Rust types and libSQL types,
+one can use the [libsql\_bindgen](https://crates.io/crates/libsql_bindgen) crate
+and its [#[libsql\_bindgen]](https://docs.rs/libsql_bindgen/latest/libsql_bindgen/attr.libsql_bindgen.html) macro. Here's an example:
+https://github.com/psarna/libsql_bindgen/blob/3e215e270773d101440c8d0e93b730e2107a4dd3/examples/encrypt_decrypt/src/lib.rs#L4-L8
 
-#[libsql_bindgen::libsql_bindgen]
-pub fn encrypt(data: String, key: String) -> String {
-    let mc = new_magic_crypt!(key, 256);
-    mc.encrypt_str_to_base64(data)
-}
-```
+Full implementation of encryption/decryption is not much longer and can be found here:
+https://github.com/psarna/libsql_bindgen/blob/3e215e270773d101440c8d0e93b730e2107a4dd3/examples/encrypt_decrypt/src/lib.rs#L1-L15
 
 Even though the code operates on native Rust type - `String`, the generated WebAssembly output will correctly translate it to pointers to structures mentioned above.
 
-## get_sql.sh script
+Finally, please note that even though this code relies on an external crate - magic-crypt - it's still fully compilable to standalone WebAssembly, and can run directly in libSQL!
+
+## get\_sql.sh script
 
 A convenience script is available for producing an SQL snippet which creates given user-defined function. The script takes one parameter - the exported function name - and outputs a single file named `create_<function-name>.sql`, which can be run in libSQL shell to register the function.
 
@@ -78,6 +76,7 @@ Here's an example shell snippet:
 sqlite3 # remember that this binary needs to be compiled with Wasm support
 
 
+.init_wasm_func_table -- sets up a table for storing functions, it's enough to invoke it once per session
 .read libsql-target/create_encrypt.sql
 .read libsql-target/create_decrypt.sql
 

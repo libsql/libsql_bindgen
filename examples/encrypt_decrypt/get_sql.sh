@@ -14,7 +14,7 @@ LIBSQL_TARGET_FILE=libsql-target/create_${LIBSQL_EXPORTED_FUNC}.sql
 
 CARGO_TARGET_DIR=libsql-target cargo build --release --target wasm32-unknown-unknown
 wasm-opt -Oz $LIBSQL_COMPILED_WASM -o $LIBSQL_OPTIMIZED_WASM || :
-echo ".init_wasm_func_table" > $LIBSQL_TARGET_FILE
+echo ".init_wasm_func_table -- only needed for shell" > $LIBSQL_TARGET_FILE
 echo "DROP FUNCTION IF EXISTS $1;" >> $LIBSQL_TARGET_FILE
 echo "CREATE FUNCTION $1 LANGUAGE wasm AS '" >> $LIBSQL_TARGET_FILE
 wasm2wat $LIBSQL_OPTIMIZED_WASM | sed "s/'/''/g" >> $LIBSQL_TARGET_FILE

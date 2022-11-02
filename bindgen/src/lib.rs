@@ -36,7 +36,7 @@ impl IntoLibSQL for &str {
     fn into_libsql_type(self) -> i32 {
         let mut mem: Vec<u8> = vec![0; self.len() + 2];
         mem[0] = SQLITE_TEXT;
-        mem[1..].copy_from_slice(self.as_bytes());
+        mem[1..=self.len()].copy_from_slice(self.as_bytes());
         mem[self.len() + 1] = 0;
         let ptr = mem.as_ptr() as i32;
         std::mem::forget(mem);

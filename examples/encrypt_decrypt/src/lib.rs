@@ -1,5 +1,5 @@
+use libsql_bindgen::*;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
-use libsql_wasm_abi::*;
 
 #[libsql_bindgen::libsql_bindgen]
 pub fn encrypt(data: String, key: String) -> String {

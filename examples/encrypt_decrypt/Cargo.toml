@@ -1,12 +1,12 @@
 [package]
-name = "libsql_function"
+name = "libsql_encrypt_decrypt"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-libsql_wasm_abi = "0"
+libsql_bindgen = "0"
 magic-crypt = "3.1"
 
 [lib]

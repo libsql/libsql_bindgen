@@ -1,7 +1,7 @@
 [workspace]
 members = [
-    "examples",
-    "bindgen_macros",
     "bindgen",
-    "function",
+    "bindgen_macros",
+    "examples",
+    "examples/encrypt_decrypt",
 ]

@@ -50,7 +50,7 @@ fn gen_into_expr(return_type_str: &str, expr: syn::Expr) -> syn::Expr {
 **       - strings are encoded as null-terminated strings
 **       - blobs are encoded as [4 bytes of size information][data]
 **       - nulls are encoded as nothing, because the type byte already indicates it's null
-*/    
+*/
 #[proc_macro_attribute]
 pub fn libsql_bindgen(_attrs: TokenStream, item: TokenStream) -> TokenStream {
     let input = match parse::<ItemFn>(item) {

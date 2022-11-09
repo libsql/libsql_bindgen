@@ -5,13 +5,10 @@
 This short example shows how to write simple encryption/decryption routines in Rust, compile them to WebAssembly and finally register them as user-defined functions in libSQL command-line interface.
 
 ## Initial setup
-### Download Wasmtime C library
+### Install cargo
 Support for user-defined functions is currently implemented on top of [Wasmtime](https://github.com/bytecodealliance/wasmtime). Our roadmap includes evaluating [WasmEdge](https://github.com/WasmEdge/WasmEdge) and [Wasmer](https://github.com/wasmerio/wasmer) as well. 
-> **_NOTE:_** the implementation of user-defined functions will eventually move to native Rust and this dependency will no longer be needed.
 
-In order to download and install C bindings for the Wasmtime library, follow the instructions from official docs: https://docs.wasmtime.dev/c-api/, or take a peek at how our CI does it: https://github.com/libsql/libsql/blob/48c94780b9ecf849915b5fb5cbc387cfda380701/.github/workflows/maketestwasm.yml#L20-L22. The final goal is to have `libwasmtime.so` available in your library path, and `wasmtime` directories in your include path.
-
-Optionally, it's advised to also install `binaryen` package (available in Ubuntu, Fedora, Arch, and more) in order to enable additional optimization of the enabled Wasm code.
+In order to be able to build the runtime, follow the official instructions: https://doc.rust-lang.org/cargo/getting-started/installation.html
 
 Once done, libSQL can be compiled with WebAssembly functions support enabled.
 
@@ -21,6 +18,15 @@ Support for WebAssembly-powered user-defined functions is currently experimental
 ```sh
 ./configure --enable-wasm-runtime
 make -j8 sqlite3
+```
+
+Remember that this configuration option is only present at https://github.com/libsql/libsql/pull/45 right now.
+
+Once compiled, the shell binary will depend on `libwblibsql.so` library produced in `.libs/` directory.
+In order to be able to run the shell, either move the binary to a known library path (e.g. `/usr/lib`),
+or use the following env variable (Linux-only):
+```sh
+LD_LIBRARY_PATH=.libs ./sqlite3
 ```
 
 # Compile user-defined functions to WebAssembly

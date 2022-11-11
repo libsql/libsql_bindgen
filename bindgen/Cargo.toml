@@ -10,3 +10,4 @@ readme = "../README.md"
 
 [dependencies]
 libsql_bindgen_macros = { version = "0", path = "../bindgen_macros"}
+

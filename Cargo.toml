@@ -5,3 +5,7 @@ members = [
     "examples",
     "examples/encrypt_decrypt",
 ]
+
+[profile.release]
+opt-level = 's'
+lto = true

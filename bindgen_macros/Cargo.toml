@@ -16,8 +16,3 @@ syn = { version = "1.0", features = ["full"] }
 
 [lib]
 proc-macro = true
-
-[profile.release]
-opt-level = 's'
-lto = true
-

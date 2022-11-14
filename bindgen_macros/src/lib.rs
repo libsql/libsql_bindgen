@@ -114,14 +114,12 @@ pub fn libsql_bindgen(_attrs: TokenStream, item: TokenStream) -> TokenStream {
     let ret_expr = gen_into_expr(&return_type_str, raw_ret_expr);
     generated_block.stmts.push(Stmt::Expr(ret_expr));
 
-    let ts = TokenStream::from(quote! {
+    TokenStream::from(quote! {
         #native_sig
         #native_block
 
         #[no_mangle]
         pub #generated_sig
         #generated_block
-    });
-    println!("Generated binding:\n{}", ts);
-    ts
+    })
 }

@@ -1,7 +1,7 @@
 [package]
 edition = "2021"
 name = "libsql_bindgen_macros"
-version = "0.2.3"
+version = "0.2.4"
 license = "MIT OR Apache-2.0"
 keywords = ["webassembly", "libsql", "sqlite", "wasm", "udf"]
 description = "Rust macros for writing WebAssembly-powered user-defined functions for libSQL"

@@ -1,6 +1,6 @@
 [package]
 name = "libsql_bindgen"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["webassembly", "libsql", "sqlite", "wasm", "udf"]
@@ -9,5 +9,5 @@ repository = "https://github.com/psarna/libsql_bindgen"
 readme = "../README.md"
 
 [dependencies]
-libsql_bindgen_macros = { version = "0", path = "../bindgen_macros"}
+libsql_bindgen_macros = { version = "0.2.4", path = "../bindgen_macros"}
 

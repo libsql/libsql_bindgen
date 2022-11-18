@@ -20,7 +20,7 @@ fn gen_from_expr(ty: &syn::Type, id: &str) -> String {
     let type_str = ty.to_owned().into_token_stream().to_string();
     match type_str.as_str() {
         "i8" | "u8" | "i16" | "u16" | "i32" | "u32" | "i64" | "u64" | "bool" | "char" => {
-            format!("{} as i64", id)
+            format!("{} as {}", id, type_str)
         }
         "f32" | "f64" => format!("{} as f64", id),
         _ => format!("<{}>::from_libsql_type({})", type_str, id),

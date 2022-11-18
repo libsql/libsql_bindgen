@@ -14,7 +14,8 @@ https://github.com/psarna/libsql_bindgen/blob/master/examples/encrypt_decrypt/sr
 Try it yourself:
 ```
 cd examples/encrypt_decrypt
-./get_sql.sh
+./get_sql.sh encrypt
+./get_sql.sh decrypt
 ```
 
 This repository is the foundation of [libSQL generate](https://github.com/psarna/libsql_generate) and http://libsql-bindgen.sarna.dev/

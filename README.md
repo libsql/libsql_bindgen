@@ -18,4 +18,4 @@ cd examples/encrypt_decrypt
 ./get_sql.sh decrypt
 ```
 
-This repository is the foundation of [libSQL generate](https://github.com/psarna/libsql_generate) and http://libsql-bindgen.sarna.dev/
+This repository is the foundation of [libSQL generate](https://github.com/psarna/libsql_generate) and http://bindgen.libsql.org/

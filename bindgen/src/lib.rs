@@ -86,3 +86,10 @@ impl<T: FromLibSQL> FromLibSQL for Option<T> {
         }
     }
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn libsql_malloc(size: usize) -> usize {
+    let buffer = Vec::<u8>::with_capacity(size);
+    let ptr = Vec::leak(buffer);
+    ptr.as_ptr() as usize
+}

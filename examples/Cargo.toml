@@ -10,3 +10,16 @@ libsql_bindgen = { path = "../bindgen" }
 [[example]]
 name = "concat"
 path = "src/concat.rs"
+
+[[example]]
+name = "concat3"
+path = "src/concat3.rs"
+
+
+[[example]]
+name = "contains"
+path = "src/contains.rs"
+
+[[example]]
+name = "reverse_blob"
+path = "src/reverse_blob.rs"

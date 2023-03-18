@@ -74,6 +74,18 @@ impl FromLibSQL for &mut [u8] {
     }
 }
 
+impl IntoLibSQL for Vec<u8> {
+    fn into_libsql_type(self) -> i32 {
+        let mut mem: Vec<u8> = vec![0; self.len() + 5];
+        mem[0] = SQLITE_BLOB;
+        mem[1..5].copy_from_slice(&u32::to_be_bytes(self.len() as u32));
+        mem[5..].copy_from_slice(&self);
+        let ptr = mem.as_ptr() as i32;
+        std::mem::forget(mem);
+        ptr
+    }
+}
+
 impl<T: FromLibSQL> FromLibSQL for Option<T> {
     fn from_libsql_type(wasm_ptr: i32) -> Self {
         let raw_ptr = wasm_ptr as *const c_char;

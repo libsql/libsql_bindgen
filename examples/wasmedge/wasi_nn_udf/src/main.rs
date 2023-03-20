@@ -3,22 +3,28 @@ use wasi_nn::NnErrno;
 mod imagenet_classes;
 
 fn main() {
-    let image = std::fs::read("./input.jpg").unwrap();
+    let mut args = std::env::args().into_iter();
+    let _ = args.next();
+    let input = args.next().unwrap();
+    let output = args.next().unwrap();
+
+    let image = std::fs::read(&input).unwrap();
     let tensor_data = image_to_pytorch_tensor(&image, 224, 224).unwrap();
-    let class = pytorch_classify(&tensor_data).unwrap();
-    println!("{}", class);
+    let tensor_ptr = tensor_data.as_ptr() as *const u8;
+    let tensor_len = tensor_data.len() * std::mem::size_of::<f32>();
+    let tensor_data = unsafe { std::slice::from_raw_parts(tensor_ptr, tensor_len) };
+    std::fs::write(&output, tensor_data).unwrap();
 }
 
 #[derive(Debug, PartialEq)]
 struct InferenceResult(usize, f32);
 
 #[libsql_bindgen::libsql_bindgen]
-fn classify(image: &mut [u8]) -> String {
-    let tensor_data = match image_to_pytorch_tensor(image, 224, 224) {
-        Ok(s) => s,
-        Err(e) => return format!("err: {:?}", e),
-    };
-    match pytorch_classify(&tensor_data) {
+fn classify(tensor: &mut [u8]) -> String {
+    if tensor.len() != 602112 {
+        return format!("err: tensor data length error");
+    }
+    match pytorch_classify(&tensor) {
         Ok(s) => s,
         Err(e) => format!("err: {:?}", e),
     }
@@ -51,7 +57,7 @@ fn sort_results(buffer: &[f32]) -> Vec<InferenceResult> {
     results
 }
 
-fn pytorch_classify(tensor_data: &[f32]) -> Result<String, NnErrno> {
+fn pytorch_classify(tensor_data: &[u8]) -> Result<String, NnErrno> {
     let weights = include_bytes!("../mobilenet.pt");
     unsafe {
         let graph = wasi_nn::load(
@@ -61,10 +67,6 @@ fn pytorch_classify(tensor_data: &[f32]) -> Result<String, NnErrno> {
         )?;
 
         let context = wasi_nn::init_execution_context(graph)?;
-        // let tensor_data = image_to_pytorch_tensor(image, 224, 224);
-        let tensor_ptr = tensor_data.as_ptr() as *const u8;
-        let tensor_len = tensor_data.len() * std::mem::size_of::<f32>();
-        let tensor_data = std::slice::from_raw_parts(tensor_ptr, tensor_len);
         let tensor = wasi_nn::Tensor {
             dimensions: &[1, 3, 224, 224],
             type_: wasi_nn::TENSOR_TYPE_F32,

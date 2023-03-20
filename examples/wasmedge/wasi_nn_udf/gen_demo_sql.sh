@@ -1,10 +1,16 @@
 #!/bin/sh
 
+# AOT wasm
+wasmedgec ../../../target/wasm32-wasi/release/wasi_nn_udf.wasm wasi_nn_udf.aot.wasm
+
 # create libsql udf
-./gen_libsql_udf.sh
+./gen_libsql_udf.sh ../../../target/wasm32-wasi/release/wasi_nn_udf.wasm
+
+# image to tensor
+wasmedge --dir=.:. wasi_nn_udf.aot.wasm ./input.jpg ./input.tensor
 
 # create insert sql script
-./gen_insert_image_sql.sh images img_blob input.jpg insert_data.sql
+./gen_insert_image_sql.sh images img_blob input.tensor insert_data.sql
 
 # create test sql script
 SQL_NAME=${1:-"test.sql"}

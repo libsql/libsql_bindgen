@@ -4,6 +4,7 @@ members = [
     "bindgen_macros",
     "examples",
     "examples/encrypt_decrypt",
+    "examples/wasmedge/*",
 ]
 
 [profile.release]

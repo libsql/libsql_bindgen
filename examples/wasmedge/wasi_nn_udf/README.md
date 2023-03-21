@@ -23,6 +23,15 @@ cp libwasmedgePluginWasiNN.so ~/.wasmedge/plugin/
 cp libwasmedgePluginWasiNN.so /usr/local/lib/wasmedge/
 ```
 
+Make sure that you [build libsql with WasmEdge support](https://wasmedge.org/docs/embed/use-case/libsql#prerequisites).
+
+```bash
+git clone https://github.com/libsql/libsql
+cd libsql
+./configure --enable-wasm-runtime-wasmedge
+make
+```
+
 Build the [WASI NN UDF](src/main.rs) example.
 
 ```bash

@@ -40,3 +40,13 @@ Execute in libsql
 ```sql
 > .read test.sql
 ```
+
+### Note
+
+The [gen_demo_sql.sh](gen_demo_sql.sh) script 
+
+* first converts the image file to a tensor file. This is not strictly necessary as the UDF itself can perform this conversion. 
+* then calls [gen_insert_image_sql.sh](gen_insert_image_sql.sh) to create a SQL file that inserts the tensor file into a database table as a blob.
+* then creates a database table with the above mentioned blob field, and calls the generated SQL file to insert the blob.
+* then calls [gen_libsql_udf.sh](gen_libsql_udf.sh) to create the UDF. The PyTorch model is embedded in the UDF.
+* finally, uses the UDF to classify the blob in a SQL query.

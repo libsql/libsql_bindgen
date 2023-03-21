@@ -15,6 +15,15 @@ cp libwasmedge_rustls.so ~/.wasmedge/plugin/
 cp libwasmedge_rustls.so /usr/local/lib/wasmedge/
 ```
 
+Make sure that you [build libsql with WasmEdge support](https://wasmedge.org/docs/embed/use-case/libsql#prerequisites).
+
+```bash
+git clone https://github.com/libsql/libsql
+cd libsql
+./configure --enable-wasm-runtime-wasmedge
+make
+```
+
 Build the [GET EXCHANGE RATE](src/main.rs) example.
 
 ```bash

@@ -1,6 +1,6 @@
 ## How to use:
 
-[Install WasmEdge](https://wasmedge.org/book/en/quick_start/install.html) and then install the HTTPS plugin as follows.
+[Install WasmEdge](https://wasmedge.org/book/en/quick_start/install.html) and then install the WasiNN plugin as follows.
 
 ```bash
 # Install PyTorch
